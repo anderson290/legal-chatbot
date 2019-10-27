@@ -29,11 +29,12 @@ exports.create = (body) => {
 }
 
 exports.update = (body) => {
-    return Company.findByIdAndUpdate(body.id, body);
+    return Company.findByIdAndUpdate(body._id, body);
 }
 
 
 exports.delete = (id) => {
+    console.log(id);
     return Company.findByIdAndDelete(id);
 }
 

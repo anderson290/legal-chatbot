@@ -6,19 +6,24 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     name: {
-        type: String
+        type: String,
+        required: true
     },
     age: {
-        type: Number
+        type: Number,
+        required: true
     },
     location: {
-        type: String
+        type: String,
+        required: true
     },
     maritalStatus:{
-        type: String
+        type: String,
+        required: true
     },
     sex: {
-        type: String
+        type: String,
+        required: true
     },
     conversation: {
         type: []

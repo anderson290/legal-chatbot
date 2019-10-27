@@ -19,7 +19,6 @@ exports.getCompanies = async (req, res) => {
 }
 
 exports.getCompany = async (req, res) => {
-    console.log(req.body)
 
     await repository.getById(req.body.id).then(company => {
 
@@ -35,11 +34,17 @@ exports.createCompany = async (req, res) => {
     await repository.create(req.body)
         .then(x => {
 
-            res.status(201).send({ message: "Empresa cadastrada" })
+            res.status(201).send({
+                 message: "Empresa cadastrada",
+                 status: 200
+             })
 
         }).catch(e => {
 
-            res.status(400).send({ message: "Empresa não cadastrada" + e })
+            res.status(400).send({
+                message: "Empresa não cadastrada" + e,
+                status: 400
+            });
 
         });
 }
@@ -52,17 +57,14 @@ exports.authenticate = async (req, res) => {
         });
 
 
-        if(!company){
+        if (!company) {
             res.status(404).send({
                 message: 'Usuário ou senha inválidos'
             });
             return;
         }
 
-        const token = await authService.generateToken({
-            email: company.email,
-            fantasyName: company.fantasyName
-        });
+        const token = await authService.generateToken(company);
 
         res.status(201).send({
             token: token,
@@ -79,29 +81,48 @@ exports.authenticate = async (req, res) => {
 
 }
 
+exports.decodeToken = async (req, res) => {
+
+    try {
+        const companyObject = await authService.decodeToken(req.body.token);
+
+        res.status(200).send({
+            company: companyObject._doc
+        });
+    } catch{ }
+
+}
+
 exports.updateCompany = async (req, res) => {
 
     await repository.update(req.body)
         .then(user => {
-            res.status(200).send({ message: 'Atualizado' })
+            res.status(200).send({
+                message: 'Atualizado', 
+                status: 200
+            });
         }).catch(e => {
             res.status(400).send({
                 message: 'Falha ao atualizar a Empresa',
-                data: e
+                data: e,
+                status: 400
             });
         });
 }
 
 exports.deleteCompany = async (req, res, next) => {
-    await repository.delete(req.body.id)
+    console.log(req.body);    
+    await repository.delete(req.body._id)
         .then(x => {
             res.status(200).send({
-                message: 'Empresa removida com sucesso'
+                message: 'Empresa removida com sucesso',
+                status: 200
             });
         }).catch(e => {
             res.status(400).send({
                 message: 'Falha ao remover a Empresa',
-                data: e
+                data: e,
+                status: 400
             });
         });
 }

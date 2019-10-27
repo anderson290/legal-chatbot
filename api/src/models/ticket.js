@@ -10,7 +10,8 @@ const schema = new Schema({
         required: true
     },
     title: {
-        type: String
+        type: String,
+        required: true
     },
     conversation: [
         {
@@ -20,14 +21,17 @@ const schema = new Schema({
     ],
     userId: {
         type: Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'user',
+        required: true
     },
     companyId: {
         type: Schema.Types.ObjectId,
-        ref: 'company'
+        ref: 'company',
+        required: true
     },
     status:{
-        type: String
+        type: String,
+        required: true
     }
 });
 

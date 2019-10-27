@@ -6,19 +6,24 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     companyName: {
-        type: String
+        type: String,
+        required: true
     },
     razaoSocial: {
-        type: String
+        type: String,
+        required: true
     },
     fantasyName: {
-        type: String
+        type: String,
+        required: true
     },
     cnpj: {
-        type: Number
+        type: String,
+        required: true
     },
     address: {
-        type: String
+        type: String,
+        required: true
     },
     phoneNumber:{
         type: Number
@@ -27,13 +32,16 @@ const schema = new Schema({
         type: String
     },
     site:{
-        type: String
+        type: String,
+        required: true
     },
     password:{
-        type: String
+        type: String,
+        required: true
     },
     level:{
-        type: Number
+        type: Number,
+        required: true
     }
 });
 
