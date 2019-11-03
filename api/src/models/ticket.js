@@ -5,10 +5,6 @@ const Schema = mongoose.Schema;
 
 
 const schema = new Schema({
-    code: {
-        type: Number,
-        required: true
-    },
     title: {
         type: String,
         required: true
@@ -31,7 +27,8 @@ const schema = new Schema({
     },
     status:{
         type: String,
-        required: true
+        required: true,
+        default: 'inProgress'
     }
 });
 

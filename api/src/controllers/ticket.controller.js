@@ -3,9 +3,9 @@
 const mongoose = require('mongoose');
 
 const Ticket = mongoose.model('ticket');
-// const md5 = require('md5');
+
 const repository = require('../repositories/ticket.repository');
-// const authService = require('./../services/auth.service');
+
 
 
 exports.getTickets = async (req, res) => {
@@ -15,6 +15,21 @@ exports.getTickets = async (req, res) => {
         res.status(200).send(tickets)
 
     });
+
+}
+
+exports.getTicketByCompany = async (req, res) => {
+
+    await repository.getByCompany(req.body.companyId)
+        .then(x => {
+
+            res.status(201).send(x)
+
+        }).catch(e => {
+
+            res.status(400).send(400)
+
+        });
 
 }
 
@@ -32,6 +47,21 @@ exports.createTicket = async (req, res) => {
 
         });
 }
+
+exports.updateTicket = async (req, res) => {
+
+    await repository.update(req.body)
+        .then(x => {
+
+            res.status(201).send({ message: "Ticket atualizado" })
+
+        }).catch(e => {
+
+            res.status(400).send({ message: "Ticket não atualizado" + e })
+
+        });
+}
+
 
 
 
