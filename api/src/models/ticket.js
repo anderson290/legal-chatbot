@@ -15,11 +15,11 @@ const schema = new Schema({
             message: String
         }
     ],
-    userId: {
-        type: Schema.Types.ObjectId,
-        ref: 'user',
-        required: true
-    },
+    // userId: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'user',
+    //     required: true
+    // },
     companyId: {
         type: Schema.Types.ObjectId,
         ref: 'company',
