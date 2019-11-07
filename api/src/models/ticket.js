@@ -29,6 +29,9 @@ const schema = new Schema({
         type: String,
         required: true,
         default: 'inProgress'
+    },
+    reason:{
+        type: String
     }
 });
 
