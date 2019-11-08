@@ -110,8 +110,7 @@ exports.updateCompany = async (req, res) => {
         });
 }
 
-exports.deleteCompany = async (req, res, next) => {
-    console.log(req.body);    
+exports.deleteCompany = async (req, res, next) => {   
     await repository.delete(req.body._id)
         .then(x => {
             res.status(200).send({
