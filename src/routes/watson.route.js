@@ -9,7 +9,8 @@ router.get('/users', watson.getUsers);
 
 
 router.put('/updateUser', watson.updateUser);
-
+router.post('/authenticate', watson.authenticate);
+router.post('/decode-token', watson.decodeToken);
 router.post('/create', watson.createUser);
 router.post('/send', watson.sendMessage);
 router.put('/:id', watson.updateMessage);

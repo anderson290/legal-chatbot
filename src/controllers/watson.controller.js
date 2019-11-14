@@ -2,11 +2,11 @@
 const watson = require('watson-developer-cloud/assistant/v1');
 const ASSISTANT_IAM_URL = 'https://gateway.watsonplatform.net/assistant/api';
 const ASSISTANT_IAM_APIKEY = '';
-
+const md5 = require('md5');
 const mongoose = require('mongoose');
-
+const repository = require('../repositories/user.repository');
 const UserConversation = mongoose.model('user');
-
+const authService = require('./../services/auth.service');
 
 const chatbot = new watson({
     'username': 'd2b20928-8536-4d46-9f4a-86c0cf2dcf7f',
@@ -18,11 +18,20 @@ const chatbot = new watson({
 });
 
 exports.createUser = async (req, res) => {
-    let user = new UserConversation(req.body)
+    let body = req.body;
+    let user = new UserConversation({
+        name: body.name,
+        age: body.age,
+        maritalStatus: body.maritalStatus,
+        location: body.location,
+        sex: body.sex,
+        email: body.email,
+        password: md5(body.password + global.SALT_KEY),
+        level: body.level
+})
 
     await user.save()
         .then(x => {
-            console.log(req.body)
             res.status(201).send({ message: "User cadastrado" })
 
         }).catch(e => {
@@ -31,6 +40,54 @@ exports.createUser = async (req, res) => {
 
         });
 }
+
+exports.authenticate = async (req, res) => {
+    
+    try {
+        
+        const user = await repository.authenticate({
+            email: req.body.email,
+            password: md5(req.body.password + global.SALT_KEY)
+        });
+        
+        if (!user) {
+            res.status(404).send({
+                message: 'Usuário ou senha inválidos'
+            });
+            return;
+        }
+
+        const token = await authService.generateToken(user);
+
+        res.status(201).send({
+            token: token,
+            data: {
+                name: user.name,
+                email: user.email,
+                level: user.level
+            }
+        });
+
+    } catch {
+
+    }
+
+
+}
+
+exports.decodeToken = async (req, res) => {
+
+    try {
+        const userObject = await authService.decodeToken(req.body.token);
+
+        res.status(200).send({
+            user: userObject._doc
+        });
+        
+    } catch{ }
+
+}
+
 exports.getFirst = async (req, res) => {
     let payload = {
         workspace_id: 'e7a92d12-195e-475d-a8e4-56e9ad5ee1c5',
@@ -54,7 +111,6 @@ exports.getFirst = async (req, res) => {
 exports.getUsers = async (req, res) => {
 
     UserConversation.find().then(users => {
-        console.log("USER", users)
         res.status(200).send(users)
     })
 

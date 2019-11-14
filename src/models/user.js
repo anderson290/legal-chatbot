@@ -9,6 +9,10 @@ const schema = new Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true
+    },
     age: {
         type: Number,
         required: true
@@ -23,6 +27,14 @@ const schema = new Schema({
     },
     sex: {
         type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    level: {
+        type: Number,
         required: true
     },
     conversation: {
