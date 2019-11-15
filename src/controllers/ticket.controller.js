@@ -33,6 +33,19 @@ exports.getTicketByCompany = async (req, res) => {
 
 }
 
+exports.getTicketByUser = async (req, res) => {
+    await repository.getByUser(req.body.userId)
+    .then(x => {
+
+        res.status(201).send(x)
+
+    }).catch(e => {
+        
+        res.status(400).send(400)
+
+    });
+}
+
 exports.createTicket = async (req, res) => {
 
 

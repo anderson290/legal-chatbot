@@ -15,11 +15,11 @@ const schema = new Schema({
             message: String
         }
     ],
-    // userId: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'user',
-    //     required: true
-    // },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
+    },
     companyId: {
         type: Schema.Types.ObjectId,
         ref: 'company',
@@ -29,6 +29,11 @@ const schema = new Schema({
         type: String,
         required: true,
         default: 'inProgress'
+    },
+    createdAt:{
+        type: Date,
+        required: true,
+        default: Date.now()
     },
     reason:{
         type: String

@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.get('/', ticket.getTickets);
 router.post('/getByCompany', ticket.getTicketByCompany);
+router.post('/getByUser', ticket.getTicketByUser);
 router.post('/create', ticket.createTicket);
 router.post('/update', ticket.updateTicket);
 // router.post('/authenticate', ticket.authenticate);

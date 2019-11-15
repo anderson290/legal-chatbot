@@ -13,6 +13,12 @@ exports.getByCompany = (companyId) => {
     });
 }
 
+exports.getByUser = (userId) => {
+    return Ticket.find({
+        userId: userId
+    });
+}
+
 exports.create = (body) => {
     let ticket = new Ticket(body);
 
