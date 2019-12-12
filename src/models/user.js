@@ -14,7 +14,7 @@ const schema = new Schema({
         required: true
     },
     age: {
-        type: Number,
+        type: String,
         required: true
     },
     location: {
